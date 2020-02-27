@@ -79,5 +79,13 @@
             @yield('content')
         </main>
     </div>
+
+    <script>
+        window.Laravel = {!! json_encode([
+           'csrfToken' => csrf_token(),
+           'apiToken' => \Illuminate\Support\Facades\Auth::user()->api_token ?? null,
+       ]) !!};
+    </script>
+
 </body>
 </html>
