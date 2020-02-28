@@ -17,6 +17,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/test', function () {
-    return 'asdf';
-})->middleware('auth:api');
+Route::get('/rooms', 'RoomController@index')->middleware('auth:api');

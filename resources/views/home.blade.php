@@ -16,6 +16,8 @@
 
                     You are logged in!
 
+                        <router-view></router-view>
+
                         <example-component></example-component>
 
                 </div>
