@@ -17,4 +17,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/rooms', 'RoomController@index')->middleware('auth:api');
+Route::middleware('auth:api')->prefix('rooms')->group(function () {
+
+
+    Route::get('/', 'RoomController@index');
+
+
+});
