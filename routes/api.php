@@ -21,6 +21,8 @@ Route::middleware('auth:api')->prefix('rooms')->group(function () {
 
 
     Route::get('/', 'RoomController@index');
+    Route::post('/', 'RoomController@store');
+    Route::delete('/', 'RoomController@destroy');
 
 
 });

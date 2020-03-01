@@ -1,8 +1,8 @@
 <template>
 
-    <el-container>
+    <el-container class="wrapper">
 
-        <el-header>
+        <el-header class="header">
 
             <a href="/">
                 <img src="hotel.svg" alt="Hotel management" class="logo-main">
@@ -11,14 +11,37 @@
 
         </el-header>
 
-        <el-container style="border: 1px solid #eee">
+        <el-container class="main">
 
-            <el-aside style="border: 1px solid #eee" hidden-xs-only>
+            <div>
 
-                <router-link :to="{ name: 'rooms' }">Rooms</router-link>
-                <router-link :to="{ name: 'dashboard' }">Dashboard</router-link>
+                <el-menu :router="true" :collapse="isCollapse">
 
-            </el-aside>
+                    <el-menu-item index="reservations" route="/reservations" >
+                        <i class="el-icon-date"></i>
+                        <span slot="title">Бронирование</span>
+                    </el-menu-item>
+
+                    <el-menu-item index="contacts" route="/contacts">
+                        <i class="el-icon-user"></i>
+                        <span slot="title">Контакты</span>
+                    </el-menu-item>
+
+                    <el-menu-item index="rooms" route="/rooms">
+                        <i class="el-icon-office-building"></i>
+                        <span slot="title">Номера</span>
+                    </el-menu-item>
+
+                    <el-menu-item index="settings" route="/settings">
+                        <i class="el-icon-setting"></i>
+                        <span slot="title">Настройки</span>
+                    </el-menu-item>
+
+                </el-menu>
+
+            </div>
+
+
 
             <el-main style="border: 1px solid #eee">
 
@@ -35,6 +58,16 @@
 <script>
     export default {
         name: "App",
+        data() {
+            return {
+                isCollapse: false,
+            }
+        },
+        methods: {
+            hhh() {
+                console.log(this.isCollapse);
+            }
+        },
         mounted() {
 
         }
@@ -43,7 +76,11 @@
 
 <style lang="scss" scoped>
 
-    .el-header {
+    .wrapper {
+        min-height: 100vh;
+    }
+
+    .header {
         border: 1px solid #eee;
         display: flex;
         align-items: center;
@@ -67,6 +104,8 @@
 
     }
 
-
+    .main {
+        flex-grow: 1;
+    }
 
 </style>

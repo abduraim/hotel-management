@@ -35,7 +35,8 @@ class RoomController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $newRoom = Room::create($request->all());
+        return $newRoom;
     }
 
     /**
@@ -78,8 +79,8 @@ class RoomController extends Controller
      * @param  \App\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
+    public function destroy(int $id)
     {
-        //
+        return $room;
     }
 }

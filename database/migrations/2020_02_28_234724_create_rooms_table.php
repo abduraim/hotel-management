@@ -17,7 +17,7 @@ class CreateRoomsTable extends Migration
             $table->bigIncrements('id');
             $table->string('name')->comment('Название комнаты');
             $table->text('lead')->nullable()->comment('Краткое описание');
-            $table->mediumText('description')->comment('Описание');
+            $table->mediumText('description')->nullable()->comment('Описание');
             $table->boolean('status')->default(false)->comment('Вкл./Выкл.');
             $table->unsignedSmallInteger('sort')->default(0)->comment('Сортировка');
             $table->timestamps();

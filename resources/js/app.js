@@ -18,21 +18,41 @@ import VueRouter from 'vue-router';
 
 Vue.use(VueRouter);
 
-import Dashboard from "./views/Dashboard";
-import Rooms from "./views/Rooms";
+
 import App from "./views/App";
+import Reservations from "./views/Reservations";
+import Contacts from "./views/Contacts";
+import Rooms from "./views/Rooms";
+import Settings from "./views/Settings";
+
+import createRoom from "./views/rooms/createRoom";
 
 
 const routes = [
     {
-        path: '/dashboard',
-        name: 'dashboard',
-        component: Dashboard,
+        path: '/reservations',
+        name: 'reservations',
+        component: Reservations,
+    },
+    {
+        path: '/contacts',
+        name: 'contacts',
+        component: Contacts,
     },
     {
         path: '/rooms',
         name: 'rooms',
         component: Rooms,
+    },
+    {
+        path: '/rooms/create',
+        name: 'create-room',
+        component: createRoom,
+    },
+    {
+        path: '/settings',
+        name: 'settings',
+        component: Settings,
     },
 ]
 
