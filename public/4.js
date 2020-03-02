@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([[4],{189:function(e,t,n){"use strict";n.r(t);var s={name:"Reservations"},i=n(0),r=Object(i.a)(s,(function(){var e=this.$createElement;this._self._c;return this._m(0)}),[function(){var e=this.$createElement,t=this._self._c||e;return t("div",[t("p",[this._v("Reservations")])])}],!1,null,"9690d536",null);t.default=r.exports}}]);

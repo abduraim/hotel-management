@@ -21,8 +21,11 @@ Route::middleware('auth:api')->prefix('rooms')->group(function () {
 
 
     Route::get('/', 'RoomController@index');
+    Route::get('/{id}', 'RoomController@show');
     Route::post('/', 'RoomController@store');
-    Route::delete('/', 'RoomController@destroy');
+    Route::post('/update', 'RoomController@update');
+    Route::delete('/{id}', 'RoomController@destroy');
+    Route::post('/change-status', 'RoomController@changeStatus');
 
 
 });

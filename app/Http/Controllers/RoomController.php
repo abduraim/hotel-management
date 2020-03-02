@@ -8,27 +8,17 @@ use Illuminate\Http\Request;
 class RoomController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Получение массива всех Номеров
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        return Room::all();
+        return Room::orderBy('created_at', 'desc')->get();
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
+     * Создание нового Номера
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -40,47 +30,59 @@ class RoomController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Получение определенного Номера
      *
-     * @param  \App\Room  $room
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
+    public function show(int $id)
     {
-        //
+        return Room::findOrFail($id);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Room  $room
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Room $room)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
+     * Обновление информации об определенно номере
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Room  $room
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request)
     {
-        //
+
+        $room = Room::findOrFail($request->id);
+
+        if ($room->update($request->all())) {
+            return ['result' => 'ok'];
+        } else {
+            return ['error' => 'Не удалось обновить информацию о номере!'];
+        }
+
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Удаление Номера
      *
-     * @param  \App\Room  $room
+     * @param  integer $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)
     {
-        return $room;
+        return Room::destroy($id);
+    }
+
+    // Изменение статуса номера
+    public function changeStatus(Request $request)
+    {
+
+        $room = Room::findOrFail($request->id);
+
+        $room->status = $request->status;
+
+        if ($room->save()) {
+            return ['result' => 'ok'];
+        } else {
+            return ['error' => 'Не удалось обновить статус номера!'];
+        }
+
     }
 }
