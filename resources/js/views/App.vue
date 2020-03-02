@@ -4,7 +4,15 @@
 
         <el-header class="header">
 
-            <a href="/">
+            <el-button
+                size="small"
+                type="plain"
+                icon="el-icon-more"
+                class="hidden-sm-and-up"
+                @click="mobileMenuVisible = true"
+            ></el-button>
+
+            <a href="/" class="hidden-xs-only">
                 <img src="hotel.svg" alt="Hotel management" class="logo-main">
                 <span>Hotel Management</span>
             </a>
@@ -13,35 +21,29 @@
 
         <el-container class="main">
 
-            <div>
+            <el-menu :router="true" :collapse="isCollapse" class="hidden-xs-only">
 
-                <el-menu :router="true" :collapse="isCollapse">
+                <el-menu-item index="reservations" route="/reservations" >
+                    <i class="el-icon-date"></i>
+                    <span slot="title">Бронирование</span>
+                </el-menu-item>
 
-                    <el-menu-item index="reservations" route="/reservations" >
-                        <i class="el-icon-date"></i>
-                        <span slot="title">Бронирование</span>
-                    </el-menu-item>
+                <el-menu-item index="contacts" route="/contacts">
+                    <i class="el-icon-user"></i>
+                    <span slot="title">Контакты</span>
+                </el-menu-item>
 
-                    <el-menu-item index="contacts" route="/contacts">
-                        <i class="el-icon-user"></i>
-                        <span slot="title">Контакты</span>
-                    </el-menu-item>
+                <el-menu-item index="rooms" route="/rooms">
+                    <i class="el-icon-office-building"></i>
+                    <span slot="title">Номера</span>
+                </el-menu-item>
 
-                    <el-menu-item index="rooms" route="/rooms">
-                        <i class="el-icon-office-building"></i>
-                        <span slot="title">Номера</span>
-                    </el-menu-item>
+                <el-menu-item index="settings" route="/settings">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">Настройки</span>
+                </el-menu-item>
 
-                    <el-menu-item index="settings" route="/settings">
-                        <i class="el-icon-setting"></i>
-                        <span slot="title">Настройки</span>
-                    </el-menu-item>
-
-                </el-menu>
-
-            </div>
-
-
+            </el-menu>
 
             <el-main style="border: 1px solid #eee">
 
@@ -50,6 +52,34 @@
             </el-main>
 
         </el-container>
+
+        <el-dialog :visible.sync="mobileMenuVisible" :fullscreen="true">
+
+            <el-menu :router="true" class="mobile-menu">
+
+                <el-menu-item index="reservations" route="/reservations" @click="handleSelect">
+                    <i class="el-icon-date"></i>
+                    <span slot="title">Бронирование</span>
+                </el-menu-item>
+
+                <el-menu-item index="contacts" route="/contacts" @click="handleSelect">
+                    <i class="el-icon-user"></i>
+                    <span slot="title">Контакты</span>
+                </el-menu-item>
+
+                <el-menu-item index="rooms" route="/rooms" @click="handleSelect">
+                    <i class="el-icon-office-building"></i>
+                    <span slot="title">Номера</span>
+                </el-menu-item>
+
+                <el-menu-item index="settings" route="/settings" @click="handleSelect">
+                    <i class="el-icon-setting"></i>
+                    <span slot="title">Настройки</span>
+                </el-menu-item>
+
+            </el-menu>
+
+        </el-dialog>
 
     </el-container>
 
@@ -61,12 +91,15 @@
         data() {
             return {
                 isCollapse: false,
+                mobileMenuVisible: true,
             }
         },
         methods: {
-            hhh() {
-                console.log(this.isCollapse);
+
+            handleSelect() {
+                this.mobileMenuVisible = false;
             }
+
         },
         mounted() {
 
@@ -106,6 +139,10 @@
 
     .main {
         flex-grow: 1;
+    }
+
+    .mobile-menu {
+        border: none;
     }
 
 </style>

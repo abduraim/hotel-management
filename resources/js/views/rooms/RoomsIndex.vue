@@ -132,15 +132,6 @@
         margin-bottom: 20px;
     }
 
-    .clearfix:before,
-    .clearfix:after {
-        display: table;
-        content: "";
-    }
-    .clearfix:after {
-        clear: both
-    }
-
     .room-card {
         margin-bottom: 20px;
 
@@ -150,19 +141,6 @@
 
         .card-header__controls {
             float: right;
-        }
-    }
-
-    .modal-form {
-        width: 60%;
-        margin-top: 15vh !important;
-        @media screen and (max-width: 900px) {
-            width: 100%;
-            margin-top: 0 !important;
-            margin-bottom: 0;
-            height: 100%;
-            overflow: auto;
-
         }
     }
 

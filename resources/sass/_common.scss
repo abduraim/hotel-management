@@ -1,0 +1,29 @@
+// message-box responsive
+.el-message-box {
+    width: 98%!important;
+    max-width: 420px;
+}
+
+// clearfix class
+.clearfix:before,
+.clearfix:after {
+    display: table;
+    content: "";
+}
+.clearfix:after {
+    clear: both
+}
+
+//modal-form responsive
+.modal-form {
+    width: 60%;
+    margin-top: 15vh !important;
+    @media screen and (max-width: 900px) {
+        width: 100%;
+        margin-top: 0 !important;
+        margin-bottom: 0;
+        height: 100%;
+        overflow: auto;
+
+    }
+}

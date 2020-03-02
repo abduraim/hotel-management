@@ -134,7 +134,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".controls {\n  margin-bottom: 20px;\n}\n.clearfix:before,\n.clearfix:after {\n  display: table;\n  content: \"\";\n}\n.clearfix:after {\n  clear: both;\n}\n.room-card {\n  margin-bottom: 20px;\n}\n.room-card .card-header__room-name {\n  font-size: 20px;\n}\n.room-card .card-header__controls {\n  float: right;\n}\n.modal-form {\n  width: 60%;\n  margin-top: 15vh !important;\n}\n@media screen and (max-width: 900px) {\n.modal-form {\n    width: 100%;\n    margin-top: 0 !important;\n    margin-bottom: 0;\n    height: 100%;\n    overflow: auto;\n}\n}", ""]);
+exports.push([module.i, ".controls {\n  margin-bottom: 20px;\n}\n.room-card {\n  margin-bottom: 20px;\n}\n.room-card .card-header__room-name {\n  font-size: 20px;\n}\n.room-card .card-header__controls {\n  float: right;\n}", ""]);
 
 // exports
 
