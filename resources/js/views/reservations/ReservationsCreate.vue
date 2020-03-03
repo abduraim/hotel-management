@@ -29,14 +29,8 @@
                 isLoading: false,   // Флаг отображения загрузки
                 calendarData: {},
                 calendarConfig: {
-                    isMultiple: true,
-                    calendarsCount: 2,
-                    isSeparately: true,
-
                     disabledDates: ['beforeToday'],
-
                     isDateRange: true,
-                    isDatePicker: false,
                     withTimePicker: true,
                     changeMonthFunction: true,
                     changeYearFunction: true,
@@ -53,11 +47,13 @@
         methods: {
 
             choseDay(ob) {
-                console.log(ob);
+                console.log(this.calendarData.dateRange.start.dateTime);
+                console.log(this.calendarData.dateRange.end.dateTime);
             },
 
-            selectedDaysCount(num) {
-                console.log(num);
+            selectedDaysCount(selectedDaysAmount) {
+                // console.log(this.calendarData.dateRange.start.dateTime);
+                // console.log(this.calendarData.dateRange.end.dateTime);
             },
 
 
@@ -90,6 +86,8 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
+
+
 
 </style>
