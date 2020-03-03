@@ -6,7 +6,8 @@ export default {
     showSuccessMessage(text) {
         Message({
             type: 'success',
-            message: text
+            message: text,
+            showClose: true,
         });
     },
 
@@ -14,7 +15,8 @@ export default {
     handleError(error) {
         Message({
             type: 'error',
-            message: `Произошла ошибка! (код: ${error.response.status})`
+            message: `Произошла ошибка! (код: ${error.response.status})`,
+            showClose: true,
         });
         console.log(error.response);
     },

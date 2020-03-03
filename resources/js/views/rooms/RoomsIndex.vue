@@ -25,17 +25,6 @@
                 @change="changeRoomStatus(room)"
             ></el-switch>
 
-<!--            <ul>-->
-<!--                <li>Name: {{ room.name }}</li>-->
-<!--                <li>Lead: {{ room.lead }}</li>-->
-<!--                <li>Desc: {{ room.description }}</li>-->
-<!--                <li>Status: {{ room.status }}</li>-->
-<!--                <li>Sort: {{ room.sort }}</li>-->
-<!--                <li>Create: {{ room.created_at }}</li>-->
-<!--                <li>Update: {{ room.updated_at }}</li>-->
-<!--                <li>Delete: {{ room.deleted_at }}</li>-->
-<!--            </ul>-->
-
         </el-card>
 
     </el-container>

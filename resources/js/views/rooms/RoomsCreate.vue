@@ -43,6 +43,9 @@
 </template>
 
 <script>
+
+    import Helpers from '../../components/helpers';
+
     export default {
         name: "RoomsCreate",
         data() {
@@ -72,19 +75,14 @@
                         this.isLoading = false;
 
                         if (response.status == 201) {
-
-                            this.$message({
-                                type: 'success',
-                                message: 'Номер успешно создан!'
-                            });
-
+                            Helpers.showSuccessMessage('Номер успешно создан!');
                             this.$router.push('/rooms');
                         }
 
                     })
                     .catch(error => {
-                        console.log(error);
                         this.isLoading = false;
+                        Helpers.handleError(error);
                     });
 
 

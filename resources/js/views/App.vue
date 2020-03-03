@@ -91,7 +91,7 @@
         data() {
             return {
                 isCollapse: false,
-                mobileMenuVisible: true,
+                mobileMenuVisible: false,
             }
         },
         methods: {

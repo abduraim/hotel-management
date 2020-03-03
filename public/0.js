@@ -43,17 +43,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "RoomsIndex",
@@ -330,14 +319,16 @@ __webpack_require__.r(__webpack_exports__);
   showSuccessMessage: function showSuccessMessage(text) {
     Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Message"])({
       type: 'success',
-      message: text
+      message: text,
+      showClose: true
     });
   },
   // Обработка ошибочного ответа
   handleError: function handleError(error) {
     Object(element_ui__WEBPACK_IMPORTED_MODULE_0__["Message"])({
       type: 'error',
-      message: "\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430! (\u043A\u043E\u0434: ".concat(error.response.status, ")")
+      message: "\u041F\u0440\u043E\u0438\u0437\u043E\u0448\u043B\u0430 \u043E\u0448\u0438\u0431\u043A\u0430! (\u043A\u043E\u0434: ".concat(error.response.status, ")"),
+      showClose: true
     });
     console.log(error.response);
   }
