@@ -36,8 +36,8 @@
                     disabledDates: ['beforeToday'],
 
                     isDateRange: true,
-                    isDatePicker: true,
-                    withTimePicker: false,
+                    isDatePicker: false,
+                    withTimePicker: true,
                     changeMonthFunction: true,
                     changeYearFunction: true,
                     changeYearStep: 1,
