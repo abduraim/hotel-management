@@ -32,7 +32,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms', params: {}})">Отмена</el-button>
+                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms-index' })">Отмена</el-button>
                 <el-button size="small" type="primary" @click="submitForm">Создать</el-button>
             </el-form-item>
 
@@ -76,7 +76,7 @@
 
                         if (response.status == 201) {
                             Helpers.showSuccessMessage('Номер успешно создан!');
-                            this.$router.push('/rooms');
+                            this.$router.push({name: 'rooms-index'});
                         }
 
                     })

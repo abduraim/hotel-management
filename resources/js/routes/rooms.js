@@ -8,7 +8,7 @@ export default [
 
     {
         path: '/rooms',
-        name: 'rooms',
+        name: 'rooms-index',
         component: RoomsIndex,
     },
     {

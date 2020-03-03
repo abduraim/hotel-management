@@ -32,7 +32,7 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms'} )" title="Отмена">Отмена</el-button>
+                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms-index'} )" title="Отмена">Отмена</el-button>
                 <el-button size="small" type="primary" @click="update()" title="Сохранить, но не выходить">Применить</el-button>
                 <el-button size="small" type="success" @click="update(true)" title="Сохранить и вернуться к списку номеров">Сохранить</el-button>
             </el-form-item>
@@ -86,7 +86,7 @@
                         this.isLoading = false;
                         Helpers.showSuccessMessage('Информация о номере успешно обновлена!');
                         if (returnToPage) {
-                            this.$router.push('/rooms');
+                            this.$router.push({name: 'rooms-index'});
                         }
                     })
                     .catch(error => {

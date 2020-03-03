@@ -4,12 +4,71 @@
 
         <h3>Создание нового бронирования</h3>
 
-        <functional-calendar
-            v-model="calendarData"
-            :configs="calendarConfig"
-            @selectedDaysCount="selectedDaysCount"
-            @choseDay="choseDay"
-        ></functional-calendar>
+        <el-form ref="form" :model="formReservation" label-width="200px">
+
+            <el-form-item label="Имя">
+                <el-input v-model="formReservation.name" placeholder="Введите имя"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Фамилия">
+                <el-input v-model="formReservation.surname" placeholder="Введите фамилию"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Телефон">
+                <el-input v-model="formReservation.phone" placeholder="Введите телефон"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Email">
+                <el-input v-model="formReservation.email" placeholder="Введите email"></el-input>
+            </el-form-item>
+
+            <el-form-item label="Email">
+                <el-select v-model="formReservation.room_id" :disabled="selectRoomDisabled" placeholder="Выберите номер">
+                    <el-option
+                        v-for="room in rooms"
+                        :key="room.id"
+                        :label="room.name"
+                        :value="room.id"
+                        :disabled="room.disabled"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
+            <el-form-item label="Даты бронирования">
+                <functional-calendar
+                    v-model="calendarData"
+                    :configs="calendarConfig"
+                    @selectedDaysCount="selectedDaysCount"
+                    @choseDay="choseDay"
+                ></functional-calendar>
+            </el-form-item>
+
+            <el-form-item>
+
+                <el-button
+                    size="small"
+                    type="plain"
+                    @click="$router.push({ name: 'reservations-index'} )"
+                    title="Отменить создание бронирования и вернуться"
+                >
+                    Отмена
+                </el-button>
+
+                <el-button
+                    size="small"
+                    type="success"
+                    icon="el-icon-check"
+                    @click="doReservation"
+                    title="Сохранить бронирование"
+                >
+                    Забронировать
+                </el-button>
+
+            </el-form-item>
+
+        </el-form>
+
+
 
 
     </el-container>
@@ -39,6 +98,36 @@
                     monthNames: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
                     shortMonthNames: ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'],
                 },
+
+                // Данные бронирования
+                formReservation: {
+                    room_id: 3,
+                    name: '',
+                    surname: '',
+                    phone: '',
+                    email: '',
+                },
+
+                selectRoomDisabled: false,
+
+                rooms: [
+                    {
+                        id: 1,
+                        name: 'First',
+                        disabled: false,
+                    },
+                    {
+                        id: 2,
+                        name: 'Second',
+                        disabled: true,
+                    },
+                    {
+                        id: 3,
+                        name: 'Third',
+                        disabled: false,
+                    },
+                ],
+
             }
         },
         components: {
@@ -54,6 +143,11 @@
             selectedDaysCount(selectedDaysAmount) {
                 // console.log(this.calendarData.dateRange.start.dateTime);
                 // console.log(this.calendarData.dateRange.end.dateTime);
+            },
+
+            // Клик по кнопке Забронировать
+            doReservation() {
+                console.log(this.formReservation)
             },
 
 
@@ -88,6 +182,11 @@
 
 <style lang="scss">
 
-
+    .vfc-styles-conditional-class {
+        max-width: 380px;
+        .vfc-main-container {
+            max-height: 344px !important;
+        }
+    }
 
 </style>
