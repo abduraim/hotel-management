@@ -1,6 +1,11 @@
 // message-box responsive
 .el-message-box {
-    width: 98%!important;
+    width: 98% !important;
+    max-width: 420px;
+}
+
+.el-message {
+    min-width: 320px !important;
     max-width: 420px;
 }
 
@@ -18,12 +23,34 @@
 .modal-form {
     width: 60%;
     margin-top: 15vh !important;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 767px) {
         width: 100%;
         margin-top: 0 !important;
         margin-bottom: 0;
         height: 100%;
         overflow: auto;
 
+    }
+}
+
+// Form-items responsive
+@media screen and (max-width: 767px) {
+    .el-form-item__label {
+        float: none !important;
+        text-align: left !important;
+        width: unset !important;
+    }
+
+    .el-form-item__content {
+        margin-left: 0 !important;
+    }
+}
+
+// Calendar fix
+.vfc-styles-conditional-class {
+    max-width: 380px;
+    min-width: 251px;
+    .vfc-main-container {
+        max-height: 344px !important;
     }
 }

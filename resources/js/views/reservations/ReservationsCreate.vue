@@ -22,7 +22,7 @@
                 <el-input v-model="formReservation.email" placeholder="Введите email"></el-input>
             </el-form-item>
 
-            <el-form-item label="Email">
+            <el-form-item label="Номер">
                 <el-select v-model="formReservation.room_id" :disabled="selectRoomDisabled" placeholder="Выберите номер">
                     <el-option
                         v-for="room in rooms"
@@ -182,11 +182,10 @@
 
 <style lang="scss">
 
-    .vfc-styles-conditional-class {
-        max-width: 380px;
-        .vfc-main-container {
-            max-height: 344px !important;
-        }
-    }
+
+
+
+
+
 
 </style>
