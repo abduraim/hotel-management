@@ -81,7 +81,7 @@
             // Удалить номер
             deleteRoom(room) {
 
-                this.$confirm(`Вы действительно хотите удалить номер ${room.name}?`, 'Warning', {
+                this.$confirm(`Вы действительно хотите удалить номер ${room.name}?`, 'Удаление номера', {
                     confirmButtonText: 'Да',
                     cancelButtonText: 'Отмена',
                     type: 'warning'
@@ -113,6 +113,7 @@
             this.getRooms();
         }
     }
+
 </script>
 
 <style lang="scss">

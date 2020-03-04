@@ -47,7 +47,9 @@
 
             <el-main style="border: 1px solid #eee">
 
-                <router-view></router-view>
+                <transition name="fade">
+                    <router-view></router-view>
+                </transition>
 
             </el-main>
 

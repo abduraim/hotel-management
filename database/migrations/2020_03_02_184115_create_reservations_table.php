@@ -32,7 +32,7 @@ class CreateReservationsTable extends Migration
     public function down()
     {
         Schema::table('reservations', function (Blueprint $table) {
-            $table->dropForeign('room_id');
+            $table->dropForeign(['room_id']);
         });
         Schema::dropIfExists('reservations');
     }
