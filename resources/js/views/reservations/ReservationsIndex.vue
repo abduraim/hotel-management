@@ -8,6 +8,31 @@
             <el-button size="small" circle icon="el-icon-plus" type="primary" title="Добавить бронирование" @click="$router.push({ name: 'reservations-create' })"></el-button>
         </div>
 
+        <el-table
+            :data="tableData"
+            style="width: 100%">
+
+            <el-table-column
+                :fixed="fixed"
+                prop="name"
+                label="Номер"
+                width="100">
+            </el-table-column>
+
+
+
+            <el-table-column
+                prop="busy"
+                :label="index + 1"
+                width="40"
+                v-for="(days, index) in daysInMonth"
+                :key="index"
+            >
+            </el-table-column>
+
+
+        </el-table>
+
         <div class="chart-box__wrapper">
 
             <div class="chart-box">
@@ -44,6 +69,23 @@
                 Helpers,
                 isLoading: false,   // Флаг отображения загрузки
 
+                fixed: 'fixed',
+
+                tableData: [{
+                    name: 'First',
+                    busy: 'X',
+                }, {
+                    name: 'Second',
+                    busy: 'X',
+                }, {
+                    name: 'Third',
+                    busy: 'X',
+                }, {
+                    name: 'Fourth',
+                    busy: 'X',
+                }],
+
+
                 rooms: [
                     {
                         id: 1,
@@ -62,7 +104,9 @@
             }
         },
         methods: {
-
+            handleClick() {
+                console.log('click');
+            },
         },
         mounted() {
             let date = new Date();
