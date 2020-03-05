@@ -17,9 +17,9 @@
 
             <el-input
                 placeholder="Имя"
-                v-model="findStr"
+                v-model="needleStr"
                 clearable
-                @input="findName"
+                @input="findContact"
             ></el-input>
 
         </div>
@@ -90,7 +90,9 @@
 </template>
 
 <script>
+
     import Helpers from "../../components/helpers";
+    import Controller from '../../components/commonController';
 
     export default {
         name: "ContactsIndex",
@@ -103,56 +105,85 @@
                 // Данные пагинатора
                 paginatorData: {
                     total: 0,
-                    perPage: 0,
-                    currentPage: 0,
+                    perPage: 10,
+                    currentPage: 1,
                 },
 
-                findStr: '',        // Поисковая строка
+                needleStr: '',        // Поисковая строка
+                findTimer: null,        // Таймер "успокаивающий" посылки запроса
 
             }
         },
         methods: {
 
             // Получение всех контактов
-            getContacts(page = 1, perPage = 10) {
+            getContacts() {
                 this.isLoading = true;
-                axios
-                    .get(`/api/contacts?page=${page}&per_page=${perPage}`)
+
+                Controller.getContactsPaginated(this.paginatorData.currentPage)
                     .then(response => {
                         console.log(response)
                         this.contactsList = response.data.data;
                         this.paginatorData.total = response.data.total;
                         this.paginatorData.perPage = response.data.per_page;
                         this.paginatorData.currentPage = response.data.current_page;
-
-
-                        // this.contactsList = [];
                         this.isLoading = false;
-                    })
-                    .catch(error => {
-                        Helpers.handleError(error);
-                    })
+                    });
+
             },
 
             // Смена страницы в пагинации
             handleCurrentChange(val) {
-                this.getContacts(val);
-                console.log(val);
+
+                this.isLoading = true;
+
+                this.paginatorData.currentPage = val;
+                window.scrollTo(0,0);
+
+                if (this.needleStr) {
+                    this.findContact();
+                } else {
+                    this.getContacts();
+                }
+
             },
 
-            // Поиск по имени
-            findName() {
-                console.log(this.findStr);
+            // Поиск контакта по имени-фамилии
+            findContact() {
 
-                axios
-                    .post('/api/contacts/find', {findStr: this.findStr})
-                    .then(response => {
-                        this.contactsList = response.data;
-                        console.log(response);
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
+                let self = this;
+
+                if (this.findTimer != null) {
+                    return false;
+                }
+
+                this.findTimer = setTimeout(function () {
+
+                    self.isLoading = true;
+
+                    axios
+                        .post(`/api/contacts/find?page=${self.paginatorData.page}&per_page=${self.paginatorData.perPage}`, {needleStr: self.needleStr})
+                        .then(response => {
+
+                            console.log(response);
+                            self.contactsList = response.data.data;
+                            self.paginatorData.total = response.data.total;
+                            self.paginatorData.perPage = response.data.per_page;
+                            self.paginatorData.currentPage = response.data.current_page;
+                            self.isLoading = false;
+
+                            if (self.paginatorData.currentPage > response.data.last_page) {
+                                self.paginatorData.currentPage = response.data.last_page;
+                            }
+
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+
+                    self.findTimer = null;
+
+                }, 500);
 
             },
 

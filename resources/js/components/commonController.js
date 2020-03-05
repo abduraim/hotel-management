@@ -21,6 +21,21 @@ export default {
         return result;
     },
 
+    // Получить список контактов
+    async getContactsPaginated(page = 1) {
+        let result = false;
+        await axios
+            .get(`/api/contacts?page=${page}`)
+            .then(response => {
+                result = response;
+            })
+            .catch(error => {
+                Helpers.handleError(error);
+                console.log(error);
+            });
+        return result;
+    },
+
 
 
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Pagination\Paginator;
 
 class ContactController extends Controller
 {
@@ -11,11 +12,19 @@ class ContactController extends Controller
     // Получение всех контактов
     public function index(Request $request)
     {
-        $perPage = 2;
-        if ($request->has('per_page')) {
-            $perPage = (int) $request->per_page;
+
+        $result = Contact::orderBy('created_at', 'desc')->paginate(10);
+
+        // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
+        // если она больше, то просто сбасываем ее на первую
+        if ($result->lastPage() < $request->page) {
+            Paginator::currentPageResolver(function () {
+                return 1;
+            });
+            $result = Contact::orderBy('created_at', 'desc')->paginate(10);
         }
-        return Contact::orderBy('created_at', 'desc')->paginate($perPage);
+
+        return $result;
     }
 
     // Получение информации об определенном контакте
@@ -53,7 +62,37 @@ class ContactController extends Controller
     // Поиск
     public function find(Request $request)
     {
-        return Contact::where('name', 'like', "%{$request->findStr}%")->get();
+
+        $needleStr = $request->needleStr;
+
+        $needleArr = explode(' ', $needleStr);
+
+        $query = '';
+
+        foreach ($needleArr as $index => $needleItemStr) {
+
+            $appendix = '';
+            if ($index > 0) {
+                $appendix = 'AND';
+            }
+            $query .= $appendix . " (name LIKE '%{$needleItemStr}%' OR surname LIKE '%{$needleItemStr}%') ";
+
+        }
+
+
+        $result = Contact::whereRaw($query)->paginate(10);
+
+        // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
+        // если она больше, то просто сбасываем ее на первую
+        if ($result->lastPage() < $request->page) {
+            Paginator::currentPageResolver(function () {
+                return 1;
+            });
+            $result = Contact::whereRaw($query)->paginate(10);
+        }
+
+        return $result;
+
     }
 
 }
