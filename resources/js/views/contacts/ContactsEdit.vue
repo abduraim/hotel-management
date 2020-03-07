@@ -37,53 +37,50 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
 
     export default {
         name: "ContactsEdit",
         data() {
             return {
-                Helpers,
                 isLoading: false,
                 contact: {},
             }
         },
         methods: {
 
+            // Получение информации о Контакте
             getContact() {
 
                 this.isLoading = true;
 
                 let contactId = this.$route.params.id;
 
-                axios
-                    .get(`/api/contacts/${contactId}`)
+                Controller.getContact(contactId)
                     .then(response => {
                         this.isLoading = false;
-                        this.contact = response.data;
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
+                        if (response) {
+                            this.contact = response.data;
+                        }
                     });
 
             },
 
             // Обновление информации о Номере
-            update(returnToPage = false) {
+            update(returnToIndexPage = false) {
 
-                axios
-                    .post('/api/contacts/update', this.contact)
-                    .then(response => {
-                        this.isLoading = false;
+                this.isLoading = true;
+
+                Controller.updateContact(this.contact)
+                .then(response => {
+                    this.isLoading = false;
+                    if (response) {
                         Helpers.showSuccessMessage('Информация о контакте успешно обновлена!');
-                        if (returnToPage) {
+                        if (returnToIndexPage) {
                             this.$router.push({name: 'contacts-index'});
                         }
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
-                    });
+                    }
+                });
 
             },
 

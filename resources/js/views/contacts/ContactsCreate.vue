@@ -36,6 +36,7 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
 
     export default {
         name: "ContactsCreate",
@@ -59,21 +60,13 @@
 
                 this.isLoading = true;
 
-                axios
-                    .post('/api/contacts', this.form)
+                Controller.createContact(this.form)
                     .then(response => {
-
                         this.isLoading = false;
-
-                        if (response.status == 201) {
+                        if (response) {
                             Helpers.showSuccessMessage('Контакт успешно создан!');
                             this.$router.push({name: 'contacts-index'});
                         }
-
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
                     });
 
             },

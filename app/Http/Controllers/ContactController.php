@@ -13,7 +13,36 @@ class ContactController extends Controller
     public function index(Request $request)
     {
 
-        $result = Contact::orderBy('created_at', 'desc')->paginate(10);
+        // Если запрос пришел с поисковой строкой
+        if ($request->has('needleStr')) {
+
+            $needleStr = $request->needleStr;
+
+            $needleArr = explode(' ', $needleStr);
+
+            $query = '';
+
+            foreach ($needleArr as $index => $needleItemStr) {
+
+                $appendix = '';
+                if ($index > 0) {
+                    $appendix = 'AND';
+                }
+                $query .= $appendix . " (name LIKE '%{$needleItemStr}%' OR surname LIKE '%{$needleItemStr}%') ";
+
+            }
+
+            $preResult = Contact::whereRaw($query);
+
+
+        } else {
+
+            $preResult = Contact::orderBy('created_at', 'desc');
+
+        }
+
+        // Получаем пагинированный результат
+        $result = $preResult->paginate(10);
 
         // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
         // если она больше, то просто сбасываем ее на первую
@@ -21,10 +50,12 @@ class ContactController extends Controller
             Paginator::currentPageResolver(function () {
                 return 1;
             });
-            $result = Contact::orderBy('created_at', 'desc')->paginate(10);
+            $result = $preResult->paginate(10);
         }
 
+        // Возвращаем результат
         return $result;
+
     }
 
     // Получение информации об определенном контакте
@@ -57,42 +88,6 @@ class ContactController extends Controller
     public function destroy(int $id)
     {
         return Contact::destroy($id);
-    }
-
-    // Поиск
-    public function find(Request $request)
-    {
-
-        $needleStr = $request->needleStr;
-
-        $needleArr = explode(' ', $needleStr);
-
-        $query = '';
-
-        foreach ($needleArr as $index => $needleItemStr) {
-
-            $appendix = '';
-            if ($index > 0) {
-                $appendix = 'AND';
-            }
-            $query .= $appendix . " (name LIKE '%{$needleItemStr}%' OR surname LIKE '%{$needleItemStr}%') ";
-
-        }
-
-
-        $result = Contact::whereRaw($query)->paginate(10);
-
-        // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
-        // если она больше, то просто сбасываем ее на первую
-        if ($result->lastPage() < $request->page) {
-            Paginator::currentPageResolver(function () {
-                return 1;
-            });
-            $result = Contact::whereRaw($query)->paginate(10);
-        }
-
-        return $result;
-
     }
 
 }
