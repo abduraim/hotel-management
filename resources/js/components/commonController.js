@@ -20,6 +20,8 @@ export default {
 
     // Получить список контактов
     async getContactsPaginated(data = {}) {
+
+        return this.sendPostRequest('/api/contacts/get-paginated', data);
         return this.sendGetRequest('/api/contacts', data);
 
 

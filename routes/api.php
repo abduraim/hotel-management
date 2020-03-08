@@ -44,6 +44,7 @@ Route::middleware('auth:api')->prefix('contacts')->group(function () {
     Route::get('/', 'ContactController@index');
     Route::get('/{id}', 'ContactController@show');
     Route::post('/', 'ContactController@store');
+    Route::post('/get-paginated', 'ContactController@getPaginated');
     Route::post('/update', 'ContactController@update');
     Route::delete('/{id}', 'ContactController@destroy');
 

@@ -61,6 +61,13 @@ class ContactController extends Controller
 
     }
 
+    public function getPaginated(Request $request)
+    {
+
+        return ContactResource::collection(Contact::orderBy('created_at', 'desc')->paginate(10));
+
+    }
+
     // Получение информации об определенном контакте
     public function show(int $id)
     {
