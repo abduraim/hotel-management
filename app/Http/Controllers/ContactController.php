@@ -47,10 +47,10 @@ class ContactController extends Controller
         // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
         // если она больше, то просто сбасываем ее на первую
         if ($result->lastPage() < $request->page) {
-            Paginator::currentPageResolver(function () {
-                return 1;
-            });
-            $result = $preResult->paginate(10);
+//            Paginator::currentPageResolver(function () {
+//                return 1;
+//            });
+//            $result = $preResult->paginate(10);
         }
 
         // Возвращаем результат
