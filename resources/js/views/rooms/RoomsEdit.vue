@@ -18,11 +18,6 @@
                 ></el-switch>
             </el-form-item>
 
-            <el-form-item label="Сортировка">
-                <el-input-number size="small" v-model="room.sort" :step="1" :min="0" :max="100"></el-input-number>
-            </el-form-item>
-
-
             <el-form-item label="Краткое описание номера">
                 <el-input v-model="room.lead"></el-input>
             </el-form-item>
@@ -32,9 +27,11 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms-index'} )" title="Отмена">Отмена</el-button>
-                <el-button size="small" type="primary" @click="update()" title="Сохранить, но не выходить">Применить</el-button>
-                <el-button size="small" type="success" @click="update(true)" title="Сохранить и вернуться к списку номеров">Сохранить</el-button>
+                <el-button-group>
+                    <el-button type="plain" @click="$router.push({ name: 'rooms-index'} )" title="Отмена" icon="el-icon-arrow-left"></el-button>
+                    <el-button type="primary" @click="update()" title="Сохранить, но не выходить" icon="el-icon-check"></el-button>
+                    <el-button type="success" @click="update(true)" title="Сохранить и вернуться к списку номеров" icon="el-icon-arrow-right"></el-button>
+                </el-button-group>
             </el-form-item>
 
         </el-form>

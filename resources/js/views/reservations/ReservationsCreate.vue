@@ -45,24 +45,25 @@
 
             <el-form-item>
 
-                <el-button
-                    size="small"
-                    type="plain"
-                    @click="$router.push({ name: 'reservations-index'} )"
-                    title="Отменить создание бронирования и вернуться"
-                >
-                    Отмена
-                </el-button>
+                <el-button-group>
 
-                <el-button
-                    size="small"
-                    type="success"
-                    icon="el-icon-check"
-                    @click="doReservation"
-                    title="Сохранить бронирование"
-                >
-                    Забронировать
-                </el-button>
+                    <el-button
+                        type="plain"
+                        @click="$router.push({ name: 'reservations-index'} )"
+                        title="Отменить создание бронирования и вернуться"
+                    >
+                        Отмена
+                    </el-button>
+
+                    <el-button
+                        type="success"
+                        @click="doReservation"
+                        title="Сохранить бронирование"
+                    >
+                        Забронировать
+                    </el-button>
+
+                </el-button-group>
 
             </el-form-item>
 
@@ -90,7 +91,7 @@
                 calendarConfig: {
                     disabledDates: ['beforeToday'],
                     isDateRange: true,
-                    withTimePicker: true,
+                    // withTimePicker: true,
                     changeMonthFunction: true,
                     changeYearFunction: true,
                     changeYearStep: 1,

@@ -2,21 +2,20 @@
 
     <el-container class="wrapper">
 
-        <el-header class="header">
+        <el-header class="header hidden-xs-only">
+            <a href="/">
+                <img src="hotel.svg" alt="Hotel management" class="logo-main">
+                <span>Hotel Management</span>
+            </a>
+        </el-header>
 
+        <el-header class="header-mobile hidden-sm-and-up">
             <el-button
-                size="small"
                 type="plain"
                 icon="el-icon-more"
                 class="hidden-sm-and-up"
                 @click="mobileMenuVisible = true"
             ></el-button>
-
-            <a href="/" class="hidden-xs-only">
-                <img src="hotel.svg" alt="Hotel management" class="logo-main">
-                <span>Hotel Management</span>
-            </a>
-
         </el-header>
 
         <el-container class="main">
@@ -55,7 +54,13 @@
 
         </el-container>
 
-        <el-dialog :visible.sync="mobileMenuVisible" :fullscreen="true">
+
+        <el-drawer
+            :visible.sync="mobileMenuVisible"
+            :with-header="true"
+            direction="ltr"
+            size="100%"
+            >
 
             <el-menu :router="true" class="mobile-menu">
 
@@ -81,7 +86,7 @@
 
             </el-menu>
 
-        </el-dialog>
+        </el-drawer>
 
     </el-container>
 
@@ -134,9 +139,12 @@
 
         }
 
+    }
 
-
-
+    .header-mobile {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
     }
 
     .main {

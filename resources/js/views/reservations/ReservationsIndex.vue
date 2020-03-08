@@ -5,7 +5,7 @@
         <h3>Бронирования</h3>
 
         <div class="controls">
-            <el-button size="small" circle icon="el-icon-plus" type="primary" title="Добавить бронирование" @click="$router.push({ name: 'reservations-create' })"></el-button>
+            <el-button circle icon="el-icon-plus" type="primary" title="Добавить бронирование" @click="$router.push({ name: 'reservations-create' })"></el-button>
         </div>
 
         <el-switch v-model="fixed" active-text="Зафиксировать названия номеров">

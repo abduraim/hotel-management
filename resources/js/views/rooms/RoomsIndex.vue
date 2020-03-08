@@ -5,16 +5,16 @@
         <h3>Номера</h3>
 
         <div class="controls">
-            <el-button size="small" circle icon="el-icon-plus" type="primary" title="Добавить номер" @click="$router.push({ name: 'rooms-create' })"></el-button>
+            <el-button circle icon="el-icon-plus" type="primary" title="Добавить номер" @click="$router.push({ name: 'rooms-create' })"></el-button>
         </div>
 
         <el-card class="room-card" v-for="room in roomsList" :key="room.id">
 
-            <div slot="header" class="clearfix">
+            <div slot="header" class="room-card__header">
                 <span class="card-header__room-name">{{room.name}}</span>
                 <div class="card-header__controls">
-                    <el-button size="small" circle icon="el-icon-edit" type="warning" title="Редактировать" @click="$router.push({ name: 'rooms-edit', params: {id: room.id} })"></el-button>
-                    <el-button size="small" circle icon="el-icon-delete" type="danger" title="Удалить номер" @click="deleteRoom(room)"></el-button>
+                    <el-button circle icon="el-icon-edit" type="warning" title="Редактировать" @click="$router.push({ name: 'rooms-edit', params: {id: room.id} })"></el-button>
+                    <el-button circle icon="el-icon-delete" type="danger" title="Удалить номер" @click="deleteRoom(room)"></el-button>
                 </div>
             </div>
 
@@ -125,13 +125,28 @@
     .room-card {
         margin-bottom: 20px;
 
-        .card-header__room-name {
-            font-size: 20px;
+        .room-card__header {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: nowrap;
+
+            .card-header__room-name {
+                display: flex;
+                align-items: center;
+                font-size: 20px;
+                margin-right: 10px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: clip;
+            }
+
+            .card-header__controls {
+                flex-shrink: 0;
+            }
+
         }
 
-        .card-header__controls {
-            float: right;
-        }
+
     }
 
 </style>

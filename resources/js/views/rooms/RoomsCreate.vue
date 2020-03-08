@@ -18,9 +18,9 @@
                 ></el-switch>
             </el-form-item>
 
-            <el-form-item label="Сортировка">
-                <el-input-number size="small" v-model="form.sort" :step="1" :min="0" :max="100"></el-input-number>
-            </el-form-item>
+<!--            <el-form-item label="Сортировка">-->
+<!--                <el-input-number size="small" v-model="form.sort" :step="1" :min="0" :max="100"></el-input-number>-->
+<!--            </el-form-item>-->
 
 
             <el-form-item label="Краткое описание номера">
@@ -32,8 +32,8 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'rooms-index' })">Отмена</el-button>
-                <el-button size="small" type="primary" @click="submitForm">Создать</el-button>
+                <el-button type="plain" @click="$router.push({ name: 'rooms-index' })">Отмена</el-button>
+                <el-button type="primary" @click="submitForm">Создать</el-button>
             </el-form-item>
 
         </el-form>
@@ -93,6 +93,7 @@
 
         }
     }
+
 </script>
 
 <style scoped>

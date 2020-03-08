@@ -28,7 +28,6 @@
         <div class="card-list">
             <el-card
                 class="contact-card"
-                @click="test"
                 v-for="contact in contactsList"
                 :key="contact.id"
             >
@@ -39,7 +38,7 @@
 
                 <div class="actions-block">
 
-                    <el-button-group class="hidden-xs-only">
+                    <div class="hidden-xs-only">
 
                         <el-button
                             circle
@@ -75,9 +74,9 @@
                             @click="deleteContact(contact)"
                         ></el-button>
 
-                    </el-button-group>
+                    </div>
 
-                    <el-dropdown type="primary" @command="mobileContactActionClick" class="hidden-sm-and-up">
+                    <el-dropdown type="primary" @command="mobileContactActionClick" trigger="click" class="hidden-sm-and-up">
                         <el-button icon="el-icon-more" type="primary"></el-button>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item icon="el-icon-phone" :command="{action: 'call', contact: contact}" v-if="contact.phone">Позвонить</el-dropdown-item>
@@ -93,6 +92,7 @@
         </div>
 
         <el-pagination
+            class="contact-pagination"
             background
             :pager-count="5"
             :hide-on-single-page="true"
@@ -134,32 +134,6 @@
         },
         methods: {
 
-            mobileContactActionClick(command) {
-
-                console.log(command);
-
-                switch (command.action) {
-                    case 'call':
-                        this.callContact(command.contact.phone);
-                        break;
-                    case 'email':
-                        this.mailContact(command.contact.email);
-                        break;
-                    case 'edit':
-                        this.$router.push({ name: 'contacts-edit', params: {id: command.contact.id} });
-                        break;
-                    case 'delete':
-                        this.deleteContact(command.contact);
-                        break;
-                    default:
-                        break;
-                }
-            },
-
-            test() {
-                console.log('tst');
-            },
-
             // Получение всех контактов
             getContacts() {
 
@@ -199,6 +173,29 @@
                     self.findTimer = null;
                 }, 500);
 
+            },
+
+            // Клик по выпадающим действиям с контактов в мобильной версии
+            mobileContactActionClick(command) {
+
+                console.log(command);
+
+                switch (command.action) {
+                    case 'call':
+                        this.callContact(command.contact.phone);
+                        break;
+                    case 'email':
+                        this.mailContact(command.contact.email);
+                        break;
+                    case 'edit':
+                        this.$router.push({ name: 'contacts-edit', params: {id: command.contact.id} });
+                        break;
+                    case 'delete':
+                        this.deleteContact(command.contact);
+                        break;
+                    default:
+                        break;
+                }
             },
 
             // Смена страницы в пагинации
@@ -282,12 +279,11 @@
                 align-items: center;
             }
 
-            @media screen and (max-width: 440px) {
-                .name-block {
-                    //max-width: 100px;
-                }
-            }
         }
+    }
+
+    .contact-pagination {
+        text-align: center;
     }
 
 </style>
