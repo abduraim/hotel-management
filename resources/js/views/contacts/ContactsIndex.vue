@@ -150,9 +150,9 @@
                 Controller.getContactsPaginated(requestData)
                     .then(response => {
                         this.contactsList = response.data.data;
-                        this.paginatorData.total = response.data.total;
-                        this.paginatorData.perPage = response.data.per_page;
-                        this.paginatorData.currentPage = response.data.current_page;
+                        this.paginatorData.total = response.data.meta.total;
+                        this.paginatorData.perPage = response.data.meta.per_page;
+                        this.paginatorData.currentPage = response.data.meta.current_page;
                         this.isLoading = false;
                     });
 

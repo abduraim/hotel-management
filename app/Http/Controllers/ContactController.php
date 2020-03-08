@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Contact;
+use App\Http\Resources\ContactCollection;
+use App\Http\Resources\ContactResource;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 
@@ -47,13 +49,14 @@ class ContactController extends Controller
         // Проверяем, запрос на превышение текущей страницы из кол-ва возможных,
         // если она больше, то просто сбасываем ее на первую
         if ($result->lastPage() < $request->page) {
-//            Paginator::currentPageResolver(function () {
-//                return 1;
-//            });
-//            $result = $preResult->paginate(10);
+            Paginator::currentPageResolver(function () {
+                return 1;
+            });
+            $result = $preResult->paginate(10);
         }
 
         // Возвращаем результат
+        return ContactResource::collection($result);
         return $result;
 
     }
@@ -61,7 +64,7 @@ class ContactController extends Controller
     // Получение информации об определенном контакте
     public function show(int $id)
     {
-        return Contact::findOrFail($id);
+        return new ContactResource(Contact::findOrFail($id));
     }
 
     // Сохранение нового контакта
