@@ -11,8 +11,8 @@ use Illuminate\Pagination\Paginator;
 class ContactController extends Controller
 {
 
-    // Получение всех контактов
-    public function index(Request $request)
+    // Получение списка контактов
+    public function getList(Request $request)
     {
 
         // Если запрос пришел с поисковой строкой
@@ -34,7 +34,7 @@ class ContactController extends Controller
 
             }
 
-            $preResult = Contact::whereRaw($query);
+            $preResult = Contact::whereRaw($query)->orderBy('created_at', 'desc');
 
 
         } else {
@@ -57,25 +57,17 @@ class ContactController extends Controller
 
         // Возвращаем результат
         return ContactResource::collection($result);
-        return $result;
-
-    }
-
-    public function getPaginated(Request $request)
-    {
-
-        return ContactResource::collection(Contact::orderBy('created_at', 'desc')->paginate(10));
 
     }
 
     // Получение информации об определенном контакте
-    public function show(int $id)
+    public function getItem(Request $request)
     {
-        return new ContactResource(Contact::findOrFail($id));
+        return new ContactResource(Contact::findOrFail($request->id));
     }
 
     // Сохранение нового контакта
-    public function store(Request $request)
+    public function save(Request $request)
     {
         return Contact::create($request->all());
     }
@@ -95,9 +87,9 @@ class ContactController extends Controller
     }
 
     // Удаление
-    public function destroy(int $id)
+    public function delete(Request $request)
     {
-        return Contact::destroy($id);
+        return Contact::destroy($request->id);
     }
 
 }

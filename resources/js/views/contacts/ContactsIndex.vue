@@ -147,7 +147,7 @@
                     requestData.needleStr = this.needleStr;
                 }
 
-                Controller.getContactsPaginated(requestData)
+                Controller.getContactList(requestData)
                     .then(response => {
                         this.contactsList = response.data.data;
                         this.paginatorData.total = response.data.meta.total;
@@ -216,7 +216,7 @@
 
                     this.isLoading = true;
 
-                    Controller.deleteContact(contact.id)
+                    Controller.deleteContact({id: contact.id})
                         .then(response => {
                             this.isLoading = false;
                             if (response) {

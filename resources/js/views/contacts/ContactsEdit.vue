@@ -56,7 +56,7 @@
 
                 let contactId = this.$route.params.id;
 
-                Controller.getContact(contactId)
+                Controller.getContactItem({id: contactId})
                     .then(response => {
                         this.isLoading = false;
                         if (response) {

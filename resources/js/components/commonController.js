@@ -19,36 +19,13 @@ export default {
     // --- CONTACTS ---
 
     // Получить список контактов
-    async getContactsPaginated(data = {}) {
-
-        return this.sendPostRequest('/api/contacts/get-paginated', data);
-        return this.sendGetRequest('/api/contacts', data);
-
-
-        // console.log(data);
-        // let result = false;
-        //
-        // let url = '/api/contacts' + '?page=' + data.page;
-        // if (data.needleStr) {
-        //     url = url + '&needleStr=' + data.needleStr;
-        // }
-        //
-        // await axios
-        //     .get(url)
-        //     .then(response => {
-        //         result = response;
-        //         console.log(response);
-        //     })
-        //     .catch(error => {
-        //         Helpers.handleError(error);
-        //         console.log(error);
-        //     });
-        // return result;
+    async getContactList(data = {}) {
+        return this.sendRequest('/api/contacts/get-list', data);
     },
 
     // Получить информацию об определенном контакте
-    async getContact(id) {
-        return this.sendRequest(`/api/contacts/${id}`, {}, 'get');
+    async getContactItem(data) {
+        return this.sendRequest(`/api/contacts/get-item`, data);
     },
 
     // Получить информацию об определенном контакте
@@ -58,12 +35,12 @@ export default {
 
     // Создать контакт
     async createContact(data = {}) {
-        return this.sendPostRequest('/api/contacts', data);
+        return this.sendRequest('/api/contacts/save', data);
     },
 
     // Удалить контакт
-    async deleteContact(id = {}) {
-        return this.sendRequest(`/api/contacts/${id}`, {}, 'delete');
+    async deleteContact(data) {
+        return this.sendRequest('/api/contacts/delete', data);
     },
 
 
@@ -77,46 +54,7 @@ export default {
 
 
     // Общий метод для отправки запросов
-    async sendRequest(url = '', data = {}, method = 'post', timeout = 3000) {
-
-        console.log(data);
-
-        let result = false;
-        await axios({
-                url,
-                method,
-                params: data,
-                timeout,
-            })
-            .then(response => {
-                result = response;
-                console.log(response);
-            })
-            .catch(error => {
-                Helpers.handleError(error);
-                console.log(error);
-            });
-        return result;
-
-    },
-
-    async sendGetRequest(url = '', data = {}) {
-        console.log(data);
-        let result = false;
-        await axios
-            .get(url, {params: data})
-            .then(response => {
-                result = response;
-                console.log(response);
-            })
-            .catch(error => {
-                Helpers.handleError(error);
-                console.log(error);
-            });
-        return result;
-    },
-
-    async sendPostRequest(url = '', data = {}) {
+    async sendRequest(url = '', data = {}) {
         let result = false;
         await axios
             .post(url, data)

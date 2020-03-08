@@ -39,14 +39,9 @@ Route::middleware('auth:api')->prefix('reservations')->group(function () {
 });
 
 Route::middleware('auth:api')->prefix('contacts')->group(function () {
-
-
-    Route::get('/', 'ContactController@index');
-    Route::get('/{id}', 'ContactController@show');
-    Route::post('/', 'ContactController@store');
-    Route::post('/get-paginated', 'ContactController@getPaginated');
+    Route::post('/get-list', 'ContactController@getList');
+    Route::post('/get-item', 'ContactController@getItem');
+    Route::post('/save', 'ContactController@save');
     Route::post('/update', 'ContactController@update');
-    Route::delete('/{id}', 'ContactController@destroy');
-
-
+    Route::post('/delete', 'ContactController@delete');
 });
