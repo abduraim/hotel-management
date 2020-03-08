@@ -35,7 +35,7 @@ export default {
 
     // Создать контакт
     async createContact(data = {}) {
-        return this.sendRequest('/api/contacts', data);
+        return this.sendPostRequest('/api/contacts', data);
     },
 
     // Удалить контакт
@@ -77,6 +77,23 @@ export default {
 
     },
 
+
+    async sendPostRequest(url = '', data = {}) {
+
+        let result = false;
+        await axios
+            .post(url, data)
+            .then(response => {
+                result = response;
+                console.log(response);
+            })
+            .catch(error => {
+                Helpers.handleError(error);
+                console.log(error);
+            });
+        return result;
+
+    },
 
 
 }
