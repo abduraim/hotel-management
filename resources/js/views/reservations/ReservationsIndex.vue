@@ -48,15 +48,12 @@
 <script>
 
     import Helpers from '../../components/helpers';
-
     import Controller from '../../components/commonController';
 
     export default {
         name: "Reservations",
         data() {
             return {
-                Helpers,
-                Controller,
 
                 isLoading: false,   // Флаг отображения загрузки
 
@@ -92,9 +89,9 @@
 
                 this.isLoading = true;
 
-                Controller.getActiveRooms()
+                Controller.getRoomList()
                     .then(response => {
-                        this.rooms = response.data;
+                        this.rooms = response.data.data;
                         console.log(this.rooms);
                         this.isLoading = false;
                     });

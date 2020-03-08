@@ -43,12 +43,12 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
 
     export default {
         name: "RoomsEdit",
         data() {
             return {
-                Helpers,
                 isLoading: false,
                 room: {},
             }
@@ -56,41 +56,28 @@
         methods: {
 
             getRoom() {
-
                 this.isLoading = true;
-
                 let roomId = this.$route.params.id;
-
-                axios
-                    .get(`/api/rooms/${roomId}`)
+                Controller.getRoomItem({id: roomId})
                     .then(response => {
                         this.isLoading = false;
-                        this.room = response.data;
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
+                        if (response) {
+                            this.room = response.data;
+                        }
                     });
-
             },
 
             // Обновление информации о Номере
             update(returnToPage = false) {
-
-                axios
-                    .post('/api/rooms/update', this.room)
+                this.isLoading = true;
+                Controller.updateRoom(this.room)
                     .then(response => {
-                        this.isLoading = false;
                         Helpers.showSuccessMessage('Информация о номере успешно обновлена!');
+                        this.isLoading = false;
                         if (returnToPage) {
                             this.$router.push({name: 'rooms-index'});
                         }
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
                     });
-
             },
 
         },

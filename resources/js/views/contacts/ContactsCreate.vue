@@ -23,8 +23,10 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'contacts-index' })">Отмена</el-button>
-                <el-button size="small" type="primary" @click="submitForm">Создать</el-button>
+                <el-button-group>
+                    <el-button type="plain" @click="$router.push({ name: 'contacts-index' })">Отмена</el-button>
+                    <el-button type="primary" @click="submitForm">Создать</el-button>
+                </el-button-group>
             </el-form-item>
 
         </el-form>

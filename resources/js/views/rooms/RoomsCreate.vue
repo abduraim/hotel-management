@@ -45,6 +45,7 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
 
     export default {
         name: "RoomsCreate",
@@ -65,30 +66,15 @@
         methods: {
 
             submitForm() {
-
                 this.isLoading = true;
-
-                axios
-                    .post('/api/rooms', this.form)
+                Controller.createRoom(this.form)
                     .then(response => {
-
                         this.isLoading = false;
-
                         if (response.status == 201) {
                             Helpers.showSuccessMessage('Номер успешно создан!');
                             this.$router.push({name: 'rooms-index'});
                         }
-
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
                     });
-
-
-
-                console.log('submit form');
-                console.log(this.form);
             },
 
         }

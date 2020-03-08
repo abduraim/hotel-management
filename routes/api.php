@@ -19,14 +19,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::middleware('auth:api')->prefix('rooms')->group(function () {
 
-
-    Route::get('/', 'RoomController@index');
-    Route::get('/{id}', 'RoomController@show');
-    Route::post('/', 'RoomController@store');
+    Route::post('/get-list', 'RoomController@getList');
+    Route::post('/get-item', 'RoomController@getItem');
+    Route::post('/save', 'RoomController@save');
     Route::post('/update', 'RoomController@update');
-    Route::delete('/{id}', 'RoomController@destroy');
+    Route::post('/delete', 'RoomController@delete');
     Route::post('/change-status', 'RoomController@changeStatus');
-
 
 });
 

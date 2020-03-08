@@ -9,9 +9,34 @@ export default {
 
     // --- ROOMS ---
 
-    // Получить список активных Номеров
-    async getActiveRooms() {
-        return this.sendRequest('/api/rooms', {}, 'get');
+    // Получить список Номеров
+    async getRoomList(data = {}) {
+        return this.sendRequest('/api/rooms/get-list', data);
+    },
+
+    // Получить информацию об определенном номере
+    async getRoomItem(data) {
+        return this.sendRequest(`/api/rooms/get-item`, data);
+    },
+
+    // Создать контакт
+    async createRoom(data = {}) {
+        return this.sendRequest('/api/rooms/save', data);
+    },
+
+    // Обновить информацию о Номере
+    async updateRoom(data = {}) {
+        return this.sendRequest('/api/rooms/update', data);
+    },
+
+    // Изменить статус номера
+    async changeRoomStatus(data = {}) {
+        return this.sendRequest('/api/rooms/change-status', data);
+    },
+
+    // Удалить Номер
+    async deleteRoom(data = {}) {
+        return this.sendRequest('/api/rooms/delete', data);
     },
 
 

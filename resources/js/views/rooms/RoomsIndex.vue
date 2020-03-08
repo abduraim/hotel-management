@@ -27,6 +27,18 @@
 
         </el-card>
 
+        <el-pagination
+            class="contact-pagination"
+            background
+            :pager-count="5"
+            :hide-on-single-page="true"
+            layout="prev, pager, next"
+            :total="paginatorData.total"
+            :page-size="paginatorData.perPage"
+            :current-page.sync="paginatorData.currentPage"
+            @current-change="paginatorPageChange"
+        ></el-pagination>
+
     </el-container>
 
 </template>
@@ -34,14 +46,21 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
 
     export default {
         name: "RoomsIndex",
         data() {
             return {
-                Helpers,
                 isLoading: false,   // Флаг отображения загрузки
                 roomsList: [],      // Список номеров
+
+                // Данные пагинатора
+                paginatorData: {
+                    total: 0,
+                    perPage: 0,
+                    currentPage: 1,
+                },
             }
         },
         methods: {
@@ -49,33 +68,27 @@
             // Получение всех номеров отеля
             getRooms() {
                 this.isLoading = true;
-                axios
-                    .get('/api/rooms')
+                let requestData = {
+                    page: this.paginatorData.currentPage,
+                };
+                Controller.getRoomList(requestData)
                     .then(response => {
-                        this.roomsList = response.data;
+                        this.roomsList = response.data.data;
+                        this.paginatorData.total = response.data.meta.total;
+                        this.paginatorData.perPage = response.data.meta.per_page;
+                        this.paginatorData.currentPage = response.data.meta.current_page;
                         this.isLoading = false;
-                    })
-                    .catch(error => {
-                        Helpers.handleError(error);
-                    })
+                    });
             },
 
             // Изменение статуса Вкл./Выкл. у номера
             changeRoomStatus(room) {
-
                 this.isLoading = true;
-
-                axios
-                    .post('/api/rooms/change-status/', room)
-                    .then (response => {
+                Controller.changeRoomStatus(room)
+                    .then(repsonse => {
                         this.isLoading = false;
                         Helpers.showSuccessMessage('Статус номера успешно изменен!');
-                    })
-                    .catch(error => {
-                        this.isLoading = false;
-                        Helpers.handleError(error);
                     });
-
             },
 
             // Удалить номер
@@ -89,23 +102,24 @@
 
                     this.isLoading = true;
 
-                    axios
-                        .delete('api/rooms/' + room.id)
+                    Controller.deleteRoom(room)
                         .then(response => {
                             this.isLoading = false;
                             Helpers.showSuccessMessage('Номер успешно удален!');
                             this.getRooms();
-                        })
-                        .catch(error => {
-                            this.isLoading = false;
-                            Helpers.handleError(error);
                         });
-
 
                 }).catch(() => {
                     // Клик по кнопке Отмена
                 });
 
+            },
+
+            // Смена страницы в пагинации
+            paginatorPageChange(val) {
+                this.paginatorData.currentPage = val;
+                window.scrollTo(0,0);
+                this.getRooms();
             },
 
         },

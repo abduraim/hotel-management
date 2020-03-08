@@ -23,9 +23,15 @@
             </el-form-item>
 
             <el-form-item>
-                <el-button size="small" type="plain" @click="$router.push({ name: 'contacts-index'} )" title="Отмена">Отмена</el-button>
-                <el-button size="small" type="primary" @click="update()" title="Сохранить, но не выходить">Применить</el-button>
-                <el-button size="small" type="success" @click="update(true)" title="Сохранить и вернуться к списку контактов">Сохранить</el-button>
+
+                <el-button-group>
+
+                    <el-button type="plain" @click="$router.push({ name: 'contacts-index'} )" title="Отмена">Отмена</el-button>
+                    <el-button type="primary" @click="update()" title="Сохранить, но не выходить">Применить</el-button>
+                    <el-button type="success" @click="update(true)" title="Сохранить и вернуться к списку контактов">Сохранить</el-button>
+
+                </el-button-group>
+
             </el-form-item>
 
         </el-form>

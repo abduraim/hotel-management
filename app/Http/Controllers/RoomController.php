@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\RoomResource;
 use App\Room;
 use Illuminate\Http\Request;
 
@@ -12,21 +13,9 @@ class RoomController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function getList(Request $request)
     {
-        return Room::orderBy('created_at', 'desc')->get();
-    }
-
-    /**
-     * Создание нового Номера
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $newRoom = Room::create($request->all());
-        return $newRoom;
+        return RoomResource::collection(Room::orderBy('created_at', 'desc')->paginate(10));
     }
 
     /**
@@ -35,9 +24,21 @@ class RoomController extends Controller
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $id)
+    public function getItem(Request $request)
     {
-        return Room::findOrFail($id);
+        return new RoomResource(Room::findOrFail($request->id));
+    }
+
+    /**
+     * Создание нового Номера
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function save(Request $request)
+    {
+        $newRoom = Room::create($request->all());
+        return new RoomResource($newRoom);
     }
 
     /**
@@ -65,9 +66,9 @@ class RoomController extends Controller
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function delete(Request $request)
     {
-        return Room::destroy($id);
+        return Room::destroy($request->id);
     }
 
     // Изменение статуса номера
