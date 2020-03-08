@@ -20,7 +20,7 @@ export default {
 
     // Получить список контактов
     async getContactsPaginated(data = {}) {
-        return this.sendRequest('/api/contacts', data, 'get');
+        return this.sendGetRequest('/api/contacts', data);
     },
 
     // Получить информацию об определенном контакте
@@ -77,9 +77,22 @@ export default {
 
     },
 
+    async sendGetRequest(url = '', data = {}) {
+        let result = false;
+        await axios
+            .get(url, {params: data})
+            .then(response => {
+                result = response;
+                console.log(response);
+            })
+            .catch(error => {
+                Helpers.handleError(error);
+                console.log(error);
+            });
+        return result;
+    },
 
     async sendPostRequest(url = '', data = {}) {
-
         let result = false;
         await axios
             .post(url, data)
@@ -92,7 +105,6 @@ export default {
                 console.log(error);
             });
         return result;
-
     },
 
 
