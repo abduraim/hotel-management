@@ -72,6 +72,15 @@ export default {
 
     // --- RESERVATIONS ---
 
+    // Создать контакт
+    async getReservationList(data = {}) {
+        return this.sendRequest('/api/reservations/get', data);
+    },
+
+    // Создать контакт
+    async createReservation(data = {}) {
+        return this.sendRequest('/api/reservations/save', data);
+    },
 
 
 
@@ -85,7 +94,6 @@ export default {
             .post(url, data)
             .then(response => {
                 result = response;
-                console.log(response);
             })
             .catch(error => {
                 Helpers.handleError(error);

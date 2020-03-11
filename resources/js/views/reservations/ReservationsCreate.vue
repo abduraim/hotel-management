@@ -6,6 +6,18 @@
 
         <el-form ref="form" :model="formReservation" label-width="200px">
 
+            <el-form-item label="Номер">
+                <el-select v-model="formReservation.room_id" :disabled="selectRoomDisabled" placeholder="Выберите номер">
+                    <el-option
+                        v-for="room in rooms"
+                        :key="room.id"
+                        :label="room.name"
+                        :value="room.id"
+                        :disabled="!room.status"
+                    ></el-option>
+                </el-select>
+            </el-form-item>
+
             <el-form-item label="Имя">
                 <el-input v-model="formReservation.name" placeholder="Введите имя"></el-input>
             </el-form-item>
@@ -22,21 +34,9 @@
                 <el-input v-model="formReservation.email" placeholder="Введите email"></el-input>
             </el-form-item>
 
-            <el-form-item label="Номер">
-                <el-select v-model="formReservation.room_id" :disabled="selectRoomDisabled" placeholder="Выберите номер">
-                    <el-option
-                        v-for="room in rooms"
-                        :key="room.id"
-                        :label="room.name"
-                        :value="room.id"
-                        :disabled="room.disabled"
-                    ></el-option>
-                </el-select>
-            </el-form-item>
-
             <el-form-item label="Даты бронирования">
                 <functional-calendar
-                    v-model="calendarData"
+                    v-model="formReservation.period"
                     :configs="calendarConfig"
                     @selectedDaysCount="selectedDaysCount"
                     @choseDay="choseDay"
@@ -69,9 +69,6 @@
 
         </el-form>
 
-
-
-
     </el-container>
 
 </template>
@@ -79,16 +76,17 @@
 <script>
 
     import Helpers from '../../components/helpers';
+    import Controller from '../../components/commonController';
     import {FunctionalCalendar} from 'vue-functional-calendar';
 
     export default {
         name: "ReservationsCreate",
         data() {
             return {
-                Helpers,
                 isLoading: false,   // Флаг отображения загрузки
                 calendarData: {},
                 calendarConfig: {
+                    dateFormat: 'yyyy.mm.dd',
                     disabledDates: ['beforeToday'],
                     isDateRange: true,
                     // withTimePicker: true,
@@ -102,32 +100,17 @@
 
                 // Данные бронирования
                 formReservation: {
-                    room_id: 3,
+                    room_id: '',
                     name: '',
                     surname: '',
                     phone: '',
                     email: '',
+                    period: {},
                 },
 
                 selectRoomDisabled: false,
 
-                rooms: [
-                    {
-                        id: 1,
-                        name: 'First',
-                        disabled: false,
-                    },
-                    {
-                        id: 2,
-                        name: 'Second',
-                        disabled: true,
-                    },
-                    {
-                        id: 3,
-                        name: 'Third',
-                        disabled: false,
-                    },
-                ],
+                rooms: [],
 
             }
         },
@@ -136,19 +119,55 @@
         },
         methods: {
 
+            // Загрузка списка номеров
+            getRooms() {
+
+                this.isLoading = true;
+
+                Controller.getRoomList()
+                    .then(response => {
+                        this.rooms = response.data.data;
+
+                        // Если бронирование открыто на определнный номер
+                        if (this.$route.query.room_id) {
+                            this.formReservation.room_id = parseInt(this.$route.query.room_id);
+                            this.selectRoomDisabled = true;
+                        }
+
+                        this.isLoading = false;
+                    });
+
+            },
+
+
+
+
+
+
             choseDay(ob) {
-                console.log(this.calendarData.dateRange.start.dateTime);
-                console.log(this.calendarData.dateRange.end.dateTime);
+                // console.log(this.formReservation.period.dateRange.start.date);
+                // console.log(this.formReservation.period.dateRange.end.date);
             },
 
             selectedDaysCount(selectedDaysAmount) {
-                // console.log(this.calendarData.dateRange.start.dateTime);
-                // console.log(this.calendarData.dateRange.end.dateTime);
+                console.log(this.formReservation.period.dateRange.start.date);
+                console.log(this.formReservation.period.dateRange.end.date);
             },
 
             // Клик по кнопке Забронировать
             doReservation() {
-                console.log(this.formReservation)
+                console.log(this.formReservation);
+
+                this.isLoading = true;
+
+                Controller.createReservation(this.formReservation)
+                    .then(response => {
+                        if (response.status == 201) {
+                            Helpers.showSuccessMessage('Бронирование успешно создано!');
+                        }
+                        this.isLoading = false;
+                    });
+
             },
 
 
@@ -177,15 +196,16 @@
             // :agoDayHide='1514937600' //Do not click before a date. Timestamp 10 digits
             // :futureDayHide='1525104000' //Do not click after a date Timestamp 10 digits
 
-        }
+        },
+        mounted() {
+            this.getRooms();
+            console.log(this.$route.query);
+        },
     }
+
 </script>
 
 <style lang="scss">
-
-
-
-
 
 
 

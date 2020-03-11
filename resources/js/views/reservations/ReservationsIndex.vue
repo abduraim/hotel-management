@@ -92,25 +92,35 @@
                 Controller.getRoomList()
                     .then(response => {
                         this.rooms = response.data.data;
-                        console.log(this.rooms);
                         this.isLoading = false;
                     });
             },
 
             // Получение бронирований на принимаемы месяц
-            getReservations(monthNumber = 3) {
+            getReservations(monthNumber = null) {
 
+                let queryObject = {};
 
+                if (monthNumber) {
+                    queryObject.month = monthNumber;
+                }
 
-
-                axios
-                    .get('/api/reservations/')
+                Controller.getReservationList(queryObject)
                     .then(response => {
                         console.log(response);
-                    })
-                    .catch(error => {
-                        console.log(error);
                     });
+
+
+
+
+                // axios
+                //     .get('/api/reservations/')
+                //     .then(response => {
+                //         console.log(response);
+                //     })
+                //     .catch(error => {
+                //         console.log(error);
+                //     });
 
             }
 
@@ -125,11 +135,11 @@
 
             this.daysInMonth = daysInMonth;
 
-            console.log(daysInMonth);
+            // console.log(daysInMonth);
 
             this.getRooms();
 
-            this.getReservations();
+            this.getReservations(month);
         }
     }
 

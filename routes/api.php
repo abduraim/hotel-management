@@ -33,6 +33,9 @@ Route::middleware('auth:api')->prefix('reservations')->group(function () {
 
     Route::get('/', 'ReservationController@index');
 
+    Route::post('/get', 'ReservationController@get');
+    Route::post('/save', 'ReservationController@save');
+
 
 });
 
